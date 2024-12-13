@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="dashboard.css">
+    <script src="dashboard.js"></script>
+    
+</head>
+<body class="p-4 md:p-8 bg-black text-white">
+    <!-- Add Data Button -->
+    <div class="max-w-7xl mx-auto mb-6">
+        <div class="navbarr">
+            <button onclick="openModal()" class="btn-primary">
+                <i class="fas fa-plus mr-2"></i>NEW ORDER
+            </button>
+            <div>
+                <label for="">ADMIN</label>
+             
+                <button style="background-color: #3b82f6; margin-left: 5px;  border-radius: 5px;">LOGOUT</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Form -->
+    <div id="dataModal" class="modal">
+        <div class="modal-content">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-xl font-semibold">NEW ORDER</h2>
+                <button onclick="closeModal()" class="text-gray-400 hover:text-white">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <form id="dashboardForm" onsubmit="handleFormSubmit(event)">
+                <!-- Expenses Section -->
+                <div class="mb-6">
+                    
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <input type="number" name="weight" class="form-input" placeholder="Weight(in Kg)">
+                        </div>
+                        <div>
+                 
+                            <input type="number" name="volume" class="form-input" placeholder="Volume(in Ltr)" required>
+                        </div>
+                    </div>
+                </div>
+
+            
+                <div class="mb-6">
+          
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            
+                            <input type="number" name="Data" class="form-input" placeholder="Preperation Time(mins)" required>
+                        </div>
+                        <div>
+                            <input type="text" name="Data" class="form-input" placeholder="Pickup Location" required>
+                        </div>
+                        <div>
+                            <!-- <label class="form-label">data (minutes)</label> -->
+                            <input type="text" name="data" class="form-input" placeholder="Delivery Location" required>
+                        </div>
+                        <div class="menu">
+                            <label for="priority">Priority:</label>
+
+<select name="priority" id="priority" style="background-color: #27272a;">
+  <option value="cost">Cost</option>
+  <option value="time">Time</option>
+  <option value="rating">Rating</option>
+</select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Statistics -->
+
+                <button type="submit" class="btn-primary w-full">
+                    <i class="fas fa-save mr-2"></i>Find my Delivery Partner
+                </button>
+            </form>
+        </div>
+    </div>
+   <div class="bothcards">
+    <div class="monthlyexpenses my-5">
+        <div class="card p-6 col-span-2">
+            <div class="flex justify-between items-center mb-4">
+                <h2 class="text-sm font-medium">Monthly Orders</h2>
+                <div class="flex items-center gap-2">
+                    <span class="text-gray-400 text-xs">Per Day</span>
+                    <button class="text-gray-400">•••</button>
+                </div>
+            </div>
+            <div class="text-4xl font-semibold mb-6">$5,420<span class="text-sm text-gray-400 ml-1">avg.</span></div>
+            <div style="height: 200px;">
+                <canvas id="dailyExpensesChart"></canvas>
+            </div>
+        </div>
+    
+       </div>
+        <!-- Dashboard Grid -->
+        <div class="max-w-15xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Monthly Expenses Chart -->
+            <div class="card p-6">
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-gray-400 text-sm font-medium">Monthly Orders</h2>
+                    <div class="flex items-center gap-2">
+                        <span class="text-gray-400 text-xs">Mar 1, 2023 - Jul 31, 2024</span>
+                        <button class="text-gray-400">
+                            <i class="fas fa-ellipsis"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="mb-6">
+                    <h3 class="text-4xl font-semibold">$5,420<span class="text-sm text-gray-400 ml-1">avg.</span></h3>
+                </div>
+                <div style="height: 90px;">
+                    <canvas id="expensesChart"></canvas>
+                </div>
+            </div>
+            
+    
+            <!-- Calories Widget -->
+            <div class="calories">
+                <div class="card p-6">
+                    <div class="flex justify-between items-center mb-4 my-5">
+                        <div>
+                            <h2 class="text-sm font-medium mb-1">
+                                <i class="fas fa-ellipsis text-orange-500 mr-2"></i>Total Orders
+                            </h2>
+                            <div class="text-2xl font-semibold calories-value">2,000</div>
+        
+                        </div>
+                        <button class="text-gray-400">
+                            <i class="fas fa-ellipsis"></i>
+                        </button>
+                    </div>
+                    <div class="space-y-4 mb-6">
+                        <div>
+                            <h3 class="text-sm font-medium mb-1">
+                                <i class="fas fa-save text-blue-500 mr-2"></i>Revenue
+                            </h3>
+                            <div class="text-2xl font-semibold">10,000</div>
+                        </div>
+                        <div>
+                            <h3 class="text-sm font-medium mb-1">
+                                <i class="fas fa-ellipsis text-purple-500 mr-2"></i>Total Customers
+                            </h3>
+                            <div class="text-2xl font-semibold">1200</div>
+                        </div>
+                    </div>
+                    <div class="flex justify-center" style="height: 160px;">
+                        <canvas id="caloriesChart"></canvas>
+                    </div>
+                </div>
+            </div>
+            <div class="calories">
+                <div class="card p-6">
+                    <div class="flex justify-between items-center mb-4 my-5">
+                        <div>
+                            <h2 class="text-sm font-medium mb-1">
+                                <i class="fas fa-ellipsis text-orange-500 mr-2"></i>Orders
+                            </h2>
+                            <div class="text-2xl font-semibold calories-value">2,000</div>
+        
+                        </div>
+                        <button class="text-gray-400">
+                            <i class="fas fa-ellipsis"></i>
+                        </button>
+                    </div>
+                    <div class="space-y-4 mb-6">
+                        <div>
+                            <h3 class="text-sm font-medium mb-1">
+                                <i class="fas fa-ellipsis text-blue-500 mr-2"></i>Customers
+                            </h3>
+                            <div class="text-2xl font-semibold">10,000</div>
+                        </div>
+                        <div>
+                            <h3 class="text-sm font-medium mb-1">
+                                <i class="fas fa-ellipsis text-purple-500 mr-2"></i>Revenue
+                            </h3>
+                            <div class="text-2xl font-semibold">25</div>
+                        </div>
+                    </div>
+                    <div class="flex justify-center" style="height: 160px;">
+                        <canvas id="caloriesChart"></canvas>
+                    </div>
+                </div>
+            </div>
+   </div>
+</div>
+            </div>
+        </div>
+
+        <!-- Stats Cards -->
+        <div class="card p-6 my-5">
+            <div class="flex justify-between items-center mb-4">
+                <h2 class="text-sm font-medium">Monthly Visitors</h2>
+                <button class="text-gray-400">•••</button>
+            </div>
+            <div class="text-4xl font-semibold mb-2">56,404</div>
+            <div class="text-green-500 text-sm mb-4">↗ 13.3% vs last month</div>
+            <div style="height: 100px;">
+                <canvas id="visitorsChart"></canvas>
+            </div>
+        </div>
+
+        <div class="card p-6">
+            <div class="flex justify-between items-center mb-4">
+                <h2 class="text-sm font-medium">Page Views</h2>
+                <button class="text-gray-400">•••</button>
+            </div>
+            <div class="text-4xl font-semibold text-purple-500 mb-2">308,874</div>
+            <div class="text-green-500 text-sm mb-4">↗ 3.3% vs last month</div>
+            <div style="height: 100px;">
+                <canvas id="pageViewsChart"></canvas>
+            </div>
+        </div>
+
+        <!-- Bottom Stats -->
+        <div class="card p-6 my-5">
+            <h2 class="text-gray-400 text-sm mb-2">Total Revenue</h2>
+            <div class="text-3xl font-semibold">$228,441</div>
+            <div class="text-green-500 text-sm">↗ 3.3%</div>
+        </div>
+
+        <div class="card p-6 my-5">
+            <h2 class="text-gray-400 text-sm mb-2">Total Expenses</h2>
+            <div class="text-3xl font-semibold">$71,887</div>
+            <div class="text-yellow-500 text-sm">→ 0.0%</div>
+        </div>
+
+        <div class="card p-6">
+            <h2 class="text-gray-400 text-sm mb-2">Total Profit</h2>
+            <div class="text-3xl font-semibold">$156,554</div>
+            <div class="text-red-500 text-sm">↘ 3.3%</div>
+        </div>
+    </div>
+
+    <script>
+ 
+    </script>
+</body>
+</html>

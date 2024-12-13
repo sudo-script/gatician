@@ -12,6 +12,7 @@
     
 </head>
 <body class="p-4 md:p-8 bg-black text-white">
+    
     <!-- Add Data Button -->
     <div class="max-w-7xl mx-auto mb-6">
         <div class="navbarr">
@@ -84,6 +85,79 @@
                 </button>
             </form>
         </div>
+    </div>
+
+    <div class="orders">
+        <table>
+            <thead>
+                <tr>
+                    <th>Order Number</th>
+                    <th>Time</th>
+                    <th>Status</th>
+                    <th>Progress</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>001</td>
+                    <td>12:30 PM</td>
+                    <td>In Progress</td>
+                    <td>
+                        <div class="progress-container">
+                            <div class="progress-bar" style="width: 50%; background-color: #4caf50;">
+                                50%
+                            </div>
+                        </div>
+                    </td>
+                    <td><button>Details</button></td>
+                </tr>
+                <tr class="expandable-row">
+                    <td colspan="5">
+                        <p><strong>More details about Order 001:</strong></p>
+                        <p>This order is currently in progress and expected to be completed by 2:00 PM today.</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td>002</td>
+                    <td>1:15 PM</td>
+                    <td>Completed</td>
+                    <td>
+                        <div class="progress-container">
+                            <div class="progress-bar" style="width: 100%; background-color: #2196F3;">
+                                100%
+                            </div>
+                        </div>
+                    </td>
+                    <td><button>Details</button></td>
+                </tr>
+                <tr class="expandable-row">
+                    <td colspan="5">
+                        <p><strong>More details about Order 002:</strong></p>
+                        <p>This order has been completed and shipped. It was finished successfully on time.</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td>003</td>
+                    <td>2:00 PM</td>
+                    <td>Pending</td>
+                    <td>
+                        <div class="progress-container">
+                            <div class="progress-bar" style="width: 20%; background-color: #f44336;">
+                                20%
+                            </div>
+                        </div>
+                    </td>
+                    <td><button>Details</button></td>
+                </tr>
+                <tr class="expandable-row">
+                    <td colspan="5">
+                        <p><strong>More details about Order 003:</strong></p>
+                        <p>This order is pending and has not yet started. The start time is expected tomorrow morning.</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
     </div>
    <div class="bothcards">
     <div class="monthlyexpenses my-5">
